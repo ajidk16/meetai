@@ -5,6 +5,15 @@ import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 
+/**
+ * Client-side React component that provides simple email-based sign-up and sign-in flows and shows the current session.
+ *
+ * Displays a sign-up form (name, email, password) and a sign-in form (email, password) when no session exists. Submitting the sign-up or sign-in forms calls the corresponding authClient methods; success and error outcomes are surfaced via browser alerts. When a session is present, renders a welcome message (using the user's name or email) and a Sign Out button that calls authClient.signOut().
+ *
+ * Note: this component reads session state via authClient.useSession() and performs authentication side effects (signUp, signIn, signOut).
+ *
+ * @returns The component's rendered JSX: either the authenticated view (welcome + sign-out) or the unauthenticated view with sign-up and sign-in forms.
+ */
 export default function Home() {
   const { data: session } = authClient.useSession();
 
