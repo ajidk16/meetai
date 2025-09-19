@@ -5,9 +5,10 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 const Page = async () => {
-  const session = await auth?.api?.getSession({
-    headers: await headers(),
-  });
+  const session =
+    (await auth?.api?.getSession({
+      headers: await headers(),
+    })) ?? null;
 
   if (!session) {
     redirect("/sign-in");
