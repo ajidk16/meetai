@@ -21,6 +21,12 @@ import {
   DrawerTitle,
 } from "./drawer";
 
+/**
+ * Lightweight wrapper around Cmdk's `CommandPrimitive` that applies project-standard styles and slot mapping.
+ *
+ * Renders a `CommandPrimitive` with `data-slot="command"`, a default set of layout and theme classes,
+ * and forwards all received props. The `className` prop is merged with the component's default classes.
+ */
 function Command({
   className,
   ...props
@@ -37,6 +43,20 @@ function Command({
   );
 }
 
+/**
+ * Responsive command-palette container that renders a Drawer on mobile and a Dialog on desktop.
+ *
+ * On mobile (when useIsMobile() is true) this component renders a Drawer with the palette content;
+ * on desktop it renders a Dialog. The provided children should be Cmdk-based command UI elements
+ * (e.g., Command, CommandInput, CommandList). All extra props are forwarded to the underlying
+ * Drawer (mobile) or Dialog (desktop).
+ *
+ * @param title - Title used for the (screen-reader-only) header; defaults to "Command Palette".
+ * @param description - Description used for the (screen-reader-only) header; defaults to "Search for a command to run...".
+ * @param className - Applied to the DialogContent on the desktop path (merged with internal classes).
+ * @param showCloseButton - Controls whether the DialogContent shows a close button on desktop; defaults to true.
+ * @returns A React element rendering the responsive command palette.
+ */
 function CommandResponsiveDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
@@ -86,6 +106,19 @@ function CommandResponsiveDialog({
   );
 }
 
+/**
+ * Desktop-only command palette wrapped in a Dialog.
+ *
+ * Renders a Dialog containing screen-reader-only header (title + description) and a
+ * DialogContent that hosts the shared `Command` component. Intended for non-mobile
+ * (desktop) usage.
+ *
+ * @param title - Visible to screen readers; defaults to "Command Palette"
+ * @param description - Screen-reader-only description shown inside the dialog header
+ * @param className - Additional classes appended to the DialogContent container
+ * @param showCloseButton - Whether the DialogContent should render a close button (default: true)
+ * @returns A React element rendering the command palette inside a Dialog
+ */
 function CommandDialog({
   title = "Command Palette",
   description = "Search for a command to run...",
@@ -117,6 +150,16 @@ function CommandDialog({
   );
 }
 
+/**
+ * Renders a styled command palette input with a leading search icon.
+ *
+ * The component mounts a wrapper (data-slot="command-input-wrapper") containing a
+ * SearchIcon and a Cmdk CommandPrimitive.Input (data-slot="command-input"). All props
+ * are forwarded to the underlying input; use `className` to extend or override the
+ * input's CSS classes.
+ *
+ * @param className - Additional class names applied to the input element
+ */
 function CommandInput({
   className,
   ...props
@@ -139,6 +182,13 @@ function CommandInput({
   );
 }
 
+/**
+ * Renders a Cmdk `List` with built-in max-height and scrolling styles.
+ *
+ * Wraps `CommandPrimitive.List`, sets `data-slot="command-list"`, applies
+ * default max-height and overflow classes for a scrollable list, and forwards
+ * all props (including `className`) to the underlying component.
+ */
 function CommandList({
   className,
   ...props
@@ -155,6 +205,16 @@ function CommandList({
   );
 }
 
+/**
+ * Renders the Cmdk "Empty" slot for the command palette with default styling.
+ *
+ * The component forwards all props to `CommandPrimitive.Empty`, sets
+ * `data-slot="command-empty"` for slot mapping, and applies small centered
+ * padding/text styles (`py-6 text-center text-sm`). Any incoming `className`
+ * or other props are merged/forwarded to the underlying primitive.
+ *
+ * @returns A React element rendering the empty-state slot for the command palette.
+ */
 function CommandEmpty({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
@@ -167,6 +227,13 @@ function CommandEmpty({
   );
 }
 
+/**
+ * Wrapper around Cmdk's CommandPrimitive.Group that applies project-specific styling.
+ *
+ * Renders a Cmdk group element with data-slot="command-group" and the default utility
+ * classes used by the command palette (including muted group-heading styles). Passes
+ * through all other props to the underlying Cmdk Group.
+ */
 function CommandGroup({
   className,
   ...props
@@ -183,6 +250,13 @@ function CommandGroup({
   );
 }
 
+/**
+ * Renders a horizontal separator for the command palette.
+ *
+ * The element includes `data-slot="command-separator"` so Cmdk or other consumers can target it,
+ * and applies the default separator styling. Additional class names passed via `className`
+ * will be merged with the defaults.
+ */
 function CommandSeparator({
   className,
   ...props
@@ -196,6 +270,13 @@ function CommandSeparator({
   );
 }
 
+/**
+ * A styled wrapper around Cmdk's CommandPrimitive.Item for use in the command palette.
+ *
+ * Applies a default set of utility classes (selected/disabled states, SVG sizing/behavior, layout)
+ * and sets `data-slot="command-item"`. Forwards all props to `CommandPrimitive.Item` and merges
+ * any provided `className`.
+ */
 function CommandItem({
   className,
   ...props
@@ -212,6 +293,15 @@ function CommandItem({
   );
 }
 
+/**
+ * Visual container for displaying a keyboard shortcut inside a command palette.
+ *
+ * Renders a <span> with the `data-slot="command-shortcut"` attribute and default
+ * styling (right-aligned, small uppercase tracking). Any `className` provided
+ * will be merged with the defaults; all other span props are forwarded.
+ *
+ * @param className - Additional CSS classes to merge with the default styling.
+ */
 function CommandShortcut({
   className,
   ...props
